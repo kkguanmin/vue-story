@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import storyAPI from './utils/api'
+
 import Story from './components/Story.vue'
 import Progress from './components/Progress.vue'
 
@@ -16,6 +18,27 @@ export default {
   components: {
     Story,
     Progress,
+  },
+  data() {
+    return {
+      stories: []
+    }
+  },
+  created() {
+    this.fetchStories()
+  },
+  methods: {
+    async fetchStories() {
+      try {
+        const { data, statusText} = await storyAPI.getStories()
+        if(statusText !== 'OK') {
+          throw new Error
+        }
+        this.stories = data.idList
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
 }
 </script>
