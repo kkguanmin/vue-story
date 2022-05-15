@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <div class="slide">
-      <Story />
+      <Story
+        :stories="stories"
+        :storyId="storyId"
+        :index="index"/>
       <Progress />
     </div>
   </div>
@@ -21,7 +24,9 @@ export default {
   },
   data() {
     return {
-      stories: []
+      stories: [],
+      index: 0,
+      storyId: ''
     }
   },
   created() {
@@ -35,6 +40,7 @@ export default {
           throw new Error
         }
         this.stories = data.idList
+        this.storyId = this.stories[this.index]
       } catch (error) {
         console.log(error)
       }
@@ -60,8 +66,6 @@ html, body {
   margin: auto;
   width: 100%;
   height: 100%;
-  border: 1px solid red;
-  border-radius: 2rem;
 }
 
 @media screen and (min-width: 576px){
