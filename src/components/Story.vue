@@ -9,8 +9,14 @@
             alt="story.bg"
             class="story-bg">
         <div class="story-content">
-            <h2 class="story-text">{{story.text}}</h2>
+            <h2 class="story-text">{{story?story.text: ''}}</h2>
         </div>
+        <button
+            class="story-prev"
+            @click="prevSlide"></button>
+        <button
+            class="story-next"
+            @click="nextSlide"></button>
     </div>
 </template>
 
@@ -58,6 +64,15 @@ export default {
                 console.log(error)
             }
         },
+        prevSlide() {
+            if(this.index === 0) {
+                return
+            }
+            this.$emit('prev')
+        },
+        nextSlide() {
+            this.$emit('next')
+        },
     }
 }
 </script>
@@ -95,6 +110,22 @@ export default {
         text-align: center;
         background: linear-gradient(to bottom, transparent 0%, black 100%);
         padding: 2rem;
+    }
+    button {
+        position: fixed;
+        width: 50%;
+        top: 0;
+        border: none;
+        background: transparent;
+        height: 100%;
+        padding: 0;
+        z-index: 1;
+    }
+    &-prev {
+        left: 0;
+    }
+    &-next {
+        right: 0;
     }
 }
 

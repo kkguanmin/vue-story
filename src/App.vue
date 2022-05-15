@@ -4,9 +4,12 @@
       <Story
         :stories="stories"
         :storyId="storyId"
-        :index="index"/>
+        :index="index"
+        @prev="prev"
+        @next="next"/>
       <Progress
-        :stories="stories"/>
+        :stories="stories"
+        :index="index"/>
     </div>
   </div>
 </template>
@@ -44,6 +47,15 @@ export default {
         this.storyId = this.stories[this.index]
       } catch (error) {
         console.log(error)
+      }
+    },
+    prev() {
+      this.index -= 1
+    },
+    next() {
+      this.index += 1
+      if(this.index === this.stories.length) {
+        this.index = 0
       }
     }
   }

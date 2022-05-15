@@ -4,7 +4,7 @@
             class="progress-item"
             v-for="(story, idx) in stories"
             :key="idx"
-            :style="{ width: Math.floor(100/stories.length) + '%'}" />
+            :style="{ width: Math.floor(100/stories.length) + '%', background: index>idx? 'white': '' }" />
     </div>
 </template>
 
@@ -19,6 +19,10 @@ export default {
         stories: {
             type: Array,
             required: true,
+        },
+        index: {
+            type: Number,
+            default: 0,
         }
     }
 }
