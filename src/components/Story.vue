@@ -1,14 +1,18 @@
 <template>
     <div class="story">
         <img
+            v-if="story? story.imageUrl?true:false:false"
             :src="story ? story.imageUrl : '' "
             alt="story.image"
             class="story-img">
         <img
+            v-if="story? story.imageUrl?true:false:false"
             :src="story ? story.imageUrl : '' "
             alt="story.bg"
             class="story-bg">
-        <div class="story-content">
+        <div
+            v-if="story? story.imageUrl?true:false:false"
+            class="story-content">
             <h2 class="story-text">{{story?story.text: ''}}</h2>
         </div>
         <button
@@ -22,6 +26,7 @@
 
 <script>
 import storyAPI from '../utils/api'
+import {eventBus} from '../utils/bus'
 
 export default {
     name: 'Story',
@@ -42,6 +47,7 @@ export default {
     data() {
         return {
             storyData: [],
+            slide: '',
         }
     },
     computed: {
@@ -51,6 +57,11 @@ export default {
     },
     created() {
         this.fetchStory()
+    },
+    updated() {
+        clearTimeout(this.slide)
+        this.autoSlide()
+        eventBus.$emit('duration', this.story.duration)
     },
     methods: {
         async fetchStory() {
@@ -73,6 +84,11 @@ export default {
         nextSlide() {
             this.$emit('next')
         },
+        autoSlide() {
+            this.slide = setTimeout(() => {
+                this.nextSlide()
+            }, this.story.duration)
+        }
     }
 }
 </script>
