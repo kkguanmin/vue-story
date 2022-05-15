@@ -66,7 +66,6 @@ export default {
 .story {
     width: 100%;
     height: 100%;
-    border-radius: 2rem;
     position: relative;
     display: flex;
     align-items: end;
@@ -77,7 +76,6 @@ export default {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 2rem;
         z-index: 1;
     }
     &-bg {
@@ -96,8 +94,18 @@ export default {
         width: 100%;
         text-align: center;
         background: linear-gradient(to bottom, transparent 0%, black 100%);
-        border-radius: 2rem;
         padding: 2rem;
+    }
+}
+
+@media screen and (min-width: 576px){
+    .story {
+        &-img {
+            border-radius: 2rem;
+        }
+        &-content {
+            border-radius: 2rem;
+        }
     }
 }
 </style>

@@ -5,7 +5,8 @@
         :stories="stories"
         :storyId="storyId"
         :index="index"/>
-      <Progress />
+      <Progress
+        :stories="stories"/>
     </div>
   </div>
 </template>
@@ -66,12 +67,14 @@ html, body {
   margin: auto;
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 @media screen and (min-width: 576px){
   .slide {
     width: 481px;
     height: 809px;
+    border-radius: 2rem;
   }
 }
 </style>
