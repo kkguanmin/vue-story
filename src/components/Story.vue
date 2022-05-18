@@ -1,19 +1,19 @@
 <template>
     <div class="story">
         <img
-            v-if="story? story.imageUrl?true:false:false"
-            :src="story ? story.imageUrl : '' "
+            v-if="storyData.imageUrl?true:false"
+            :src="storyData ? storyData.imageUrl : '' "
             alt="story.image"
             class="story-img">
         <img
-            v-if="story? story.imageUrl?true:false:false"
-            :src="story ? story.imageUrl : '' "
+            v-if="storyData.imageUrl?true:false"
+            :src="storyData ? storyData.imageUrl : '' "
             alt="story.bg"
             class="story-bg">
         <div
-            v-if="story? story.imageUrl?true:false:false"
+            v-if="storyData.imageUrl?true:false"
             class="story-content">
-            <h2 class="story-text">{{story?story.text: ''}}</h2>
+            <h2 class="story-text">{{storyData?storyData.text: ''}}</h2>
         </div>
         <button
             class="story-prev"
@@ -35,10 +35,6 @@ export default {
             type: Array,
             required: true,
         },
-        storyId: {
-            type: String,
-            required: true,
-        },
         index: {
             type: Number,
             default: 0,
@@ -46,25 +42,17 @@ export default {
     },
     data() {
         return {
-            storyData: [],
+            storyData: {},
             slide: '',
         }
     },
     computed: {
-        story() {
-            return this.storyData[this.index]
-        }
+        storyId() {
+            return this.stories[this.index]
+        },
     },
-    created() {
-        this.fetchStory()
-    },
-    updated() {
-        clearTimeout(this.slide)
-        this.autoSlide()
-        eventBus.$emit('duration', this.story.duration)
-    },
-    methods: {
-        async fetchStory() {
+    watch: {
+        storyId: async function() {
             try {
                 const { data, statusText} = await storyAPI.getStory(this.storyId)
                 if(statusText !== 'OK') {
@@ -74,7 +62,14 @@ export default {
             } catch (error) {
                 console.log(error)
             }
-        },
+        }
+    },
+    updated() {
+        clearTimeout(this.slide)
+        this.autoSlide()
+        eventBus.$emit('duration', this.storyData.duration)
+    },
+    methods: {
         prevSlide() {
             if(this.index === 0) {
                 return
@@ -87,7 +82,7 @@ export default {
         autoSlide() {
             this.slide = setTimeout(() => {
                 this.nextSlide()
-            }, this.story.duration)
+            }, this.storyData.duration)
         }
     }
 }

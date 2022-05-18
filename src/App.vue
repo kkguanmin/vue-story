@@ -3,7 +3,6 @@
     <div class="slide">
       <Story
         :stories="stories"
-        :storyId="storyId"
         :index="index"
         @prev="prev"
         @next="next"/>
