@@ -1,17 +1,14 @@
 <template>
     <div class="story">
         <img
-            v-if="story.imageUrl?true:false"
             :src="story ? story.imageUrl : '' "
-            alt="story.image"
             class="story-img">
         <img
-            v-if="story.imageUrl?true:false"
             :src="story ? story.imageUrl : '' "
             alt="story.bg"
             class="story-bg">
         <div
-            v-if="story.imageUrl?true:false"
+            v-if="story.text"
             class="story-content">
             <h2 class="story-text">{{story?story.text: ''}}</h2>
         </div>
@@ -35,7 +32,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['stories', 'story', 'index']),
+        ...mapState(['stories', 'story', 'index', 'isLoading']),
         storyId() {
             return this.stories[this.index]
         },
@@ -80,6 +77,8 @@ export default {
     position: relative;
     display: flex;
     align-items: end;
+    border-radius: 2rem;
+    background: rgba(0, 0, 0, 0.7);
     &-img {
         position: absolute;
         top: 0;
@@ -95,6 +94,7 @@ export default {
         left: 0;
         width: 100vw;
         height: 100vh;
+        object-fit: cover;
         z-index: -1;
         filter: blur(200px);
     }

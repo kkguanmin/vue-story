@@ -59,7 +59,6 @@ html, body {
   .slide {
     width: 481px;
     height: 809px;
-    border-radius: 2rem;
   }
 }
 </style>
