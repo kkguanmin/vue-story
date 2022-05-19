@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import storyAPI from './utils/api'
+import { mapState, mapActions } from 'vuex'
 
 import Story from './components/Story.vue'
 import Progress from './components/Progress.vue'
@@ -27,35 +27,24 @@ export default {
   },
   data() {
     return {
-      stories: [],
-      index: 0,
-      storyId: ''
     }
+  },
+  computed: {
+    ...mapState(['stories', 'storyId', 'isLoading', 'index'])
   },
   created() {
     this.fetchStories()
   },
   methods: {
-    async fetchStories() {
-      try {
-        const { data, statusText} = await storyAPI.getStories()
-        if(statusText !== 'OK') {
-          throw new Error
-        }
-        this.stories = data.idList
-        this.storyId = this.stories[this.index]
-      } catch (error) {
-        console.log(error)
-      }
-    },
+    ...mapActions(['fetchStories']),
     prev() {
-      this.index -= 1
+      // this.index -= 1
     },
     next() {
-      this.index += 1
-      if(this.index === this.stories.length) {
-        this.index = 0
-      }
+      // this.index += 1
+      // if(this.index === this.stories.length) {
+      //   this.index = 0
+      // }
     }
   }
 }

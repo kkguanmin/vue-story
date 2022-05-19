@@ -32,7 +32,7 @@ export default {
     name: 'Story',
     props: {
         stories: {
-            type: Array,
+            type: Object,
             required: true,
         },
         index: {

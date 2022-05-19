@@ -6,7 +6,7 @@
             :key="idx"
             :style="{ width: Math.floor(100/stories.length) + '%', background: index>idx? 'white': '' }"
             :index="index"
-            :idx="idx" />
+            :idx="Number(idx)" />
     </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
     },
     props: {
         stories: {
-            type: Array,
+            type: Object,
             required: true,
         },
         index: {
