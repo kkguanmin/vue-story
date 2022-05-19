@@ -58,9 +58,11 @@ export default {
                 return
             }
             this.$store.commit('prevIndex')
+            clearTimeout(this.slide)
         },
         nextSlide() {
             this.$store.commit('nextIndex')
+            clearTimeout(this.slide)
         },
         autoSlide() {
             this.slide = setTimeout(() => {

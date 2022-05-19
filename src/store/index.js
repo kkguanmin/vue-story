@@ -57,9 +57,15 @@ export default new Vuex.Store({
     },
     prevIndex(state) {
       state.index -= 1
+      if(state.index <= 0) {
+        state.index = 0
+      }
     },
     nextIndex(state) {
       state.index += 1
+      if(state.index >= state.stories.length) {
+        state.index = 0
+      }
     },
     setIsLoading (state, isLoading) {
       state.isLoading = isLoading
