@@ -1,6 +1,11 @@
 <template>
     <div class="story">
         <img
+            v-if="this.index > 0 && isLoading"
+            src="../assets/loading.gif"
+            class="story-img loading">
+        <img
+            v-else
             :src="story ? story.imageUrl : '' "
             class="story-img">
         <img
@@ -78,7 +83,7 @@ export default {
     display: flex;
     align-items: end;
     border-radius: 2rem;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 1);
     &-img {
         position: absolute;
         top: 0;
@@ -87,6 +92,9 @@ export default {
         height: 100%;
         object-fit: cover;
         z-index: 1;
+        &.loading {
+            object-fit: none;
+        }
     }
     &-bg {
         position: fixed;
