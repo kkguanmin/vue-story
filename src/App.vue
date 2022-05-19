@@ -2,13 +2,9 @@
   <div id="app">
     <div class="slide">
       <Story
-        :stories="stories"
-        :index="index"
         @prev="prev"
         @next="next"/>
-      <Progress
-        :stories="stories"
-        :index="index"/>
+      <Progress />
     </div>
   </div>
 </template>

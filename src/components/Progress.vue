@@ -11,22 +11,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import ProgressItem from './ProgressItem.vue'
 export default {
     name: 'Progress',
     components: {
         ProgressItem
     },
-    props: {
-        stories: {
-            type: Object,
-            required: true,
-        },
-        index: {
-            type: Number,
-            default: 0,
-        }
-    }
+    computed: {
+        ...mapState(['stories', 'index'])
+    },
+    created() {
+        console.log(this.stories.length)
+    },
 }
 </script>
 

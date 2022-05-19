@@ -1,19 +1,19 @@
 <template>
     <div class="story">
         <img
-            v-if="storyData.imageUrl?true:false"
-            :src="storyData ? storyData.imageUrl : '' "
+            v-if="story.imageUrl?true:false"
+            :src="story ? story.imageUrl : '' "
             alt="story.image"
             class="story-img">
         <img
-            v-if="storyData.imageUrl?true:false"
-            :src="storyData ? storyData.imageUrl : '' "
+            v-if="story.imageUrl?true:false"
+            :src="story ? story.imageUrl : '' "
             alt="story.bg"
             class="story-bg">
         <div
-            v-if="storyData.imageUrl?true:false"
+            v-if="story.imageUrl?true:false"
             class="story-content">
-            <h2 class="story-text">{{storyData?storyData.text: ''}}</h2>
+            <h2 class="story-text">{{story?story.text: ''}}</h2>
         </div>
         <button
             class="story-prev"
@@ -25,64 +25,49 @@
 </template>
 
 <script>
-import storyAPI from '../utils/api'
+import { mapState, mapActions } from 'vuex'
 import {eventBus} from '../utils/bus'
 
 export default {
     name: 'Story',
-    props: {
-        stories: {
-            type: Object,
-            required: true,
-        },
-        index: {
-            type: Number,
-            default: 0,
-        }
-    },
     data() {
         return {
-            storyData: {},
             slide: '',
         }
     },
     computed: {
+        ...mapState(['stories', 'story', 'index']),
         storyId() {
             return this.stories[this.index]
         },
     },
     watch: {
-        storyId: async function() {
-            try {
-                const { data, statusText} = await storyAPI.getStory(this.storyId)
-                if(statusText !== 'OK') {
-                    throw new Error
-                }
-                this.storyData = data
-            } catch (error) {
-                console.log(error)
+        storyId: {
+            handler: function() {
+                this.$store.dispatch('fetchStory', this.storyId)
             }
-        }
+        },
     },
     updated() {
         clearTimeout(this.slide)
         this.autoSlide()
-        eventBus.$emit('duration', this.storyData.duration)
+        eventBus.$emit('duration', this.story.duration)
     },
     methods: {
+        ...mapActions(['fetchStory']),
         prevSlide() {
             if(this.index === 0) {
                 return
             }
-            this.$emit('prev')
+            this.$store.commit('prevIndex')
         },
         nextSlide() {
-            this.$emit('next')
+            this.$store.commit('nextIndex')
         },
         autoSlide() {
             this.slide = setTimeout(() => {
                 this.nextSlide()
-            }, this.storyData.duration)
+            }, this.story.duration)
         }
     }
 }
