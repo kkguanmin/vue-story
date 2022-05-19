@@ -1,13 +1,13 @@
 <template>
     <div>
         <div
-            :class="{ 'timer': true, 'active':isIndex }"
-            :style="{ transition: isIndex? this.duration + 'ms linear' : '' }"></div>
+            :class="{ 'timer': true, 'active':(isIndex && !isLoading) }"
+            :style="{ transition: (isIndex && !isLoading)? this.story.duration + 'ms linear' : '' }"></div>
     </div>
 </template>
 
 <script>
-import {eventBus} from '../utils/bus'
+import { mapState } from 'vuex'
 
 export default {
     name: 'ProgressItem',
@@ -21,23 +21,17 @@ export default {
     },
     data() {
         return {
-            duration: 0
         }
     },
     computed: {
+        ...mapState(['story', 'isLoading']),
         isIndex() {
             return this.index === this.idx
         }
     },
     created() {
-        this.getTimer()
     },
     methods: {
-        getTimer() {
-            eventBus.$on('duration', (payload) => {
-                this.duration = payload
-            })
-        }
     },
 }
 </script>

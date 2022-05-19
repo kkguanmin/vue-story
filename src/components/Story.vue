@@ -26,7 +26,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import {eventBus} from '../utils/bus'
 
 export default {
     name: 'Story',
@@ -51,7 +50,6 @@ export default {
     updated() {
         clearTimeout(this.slide)
         this.autoSlide()
-        eventBus.$emit('duration', this.story.duration)
     },
     methods: {
         ...mapActions(['fetchStory']),

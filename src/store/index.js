@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    stories: {},
+    stories: [],
     storyId: '',
     story: {},
     index: 0,

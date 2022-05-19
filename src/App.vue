@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <div class="slide">
-      <Story
-        @prev="prev"
-        @next="next"/>
+      <Story />
       <Progress />
     </div>
   </div>
@@ -33,15 +31,6 @@ export default {
   },
   methods: {
     ...mapActions(['fetchStories']),
-    prev() {
-      // this.index -= 1
-    },
-    next() {
-      // this.index += 1
-      // if(this.index === this.stories.length) {
-      //   this.index = 0
-      // }
-    }
   }
 }
 </script>
