@@ -9,6 +9,7 @@ export default new Vuex.Store({
     stories: [],
     storyId: '',
     story: {},
+    storyData: [],
     index: 0,
     isLoading: false,
   },
@@ -21,13 +22,22 @@ export default new Vuex.Store({
         if(statusText !== 'OK') {
           throw new Error
         }
-        console.log(data.idList)
+        // console.log(data.idList)
         commit('setStories', data.idList)
       } catch (error) {
         console.log(error)
       }
     },
-    async fetchStory({ commit }, storyId) {
+    async fetchStory({ commit, state }, storyId) {
+      const storyData = JSON.parse(JSON.stringify(state.storyData))
+      // check if vuex have desired story data
+      if(storyData[state.index]) {
+        if(storyData[state.index].id === storyId) {
+          commit('setStoryFromVuex')
+          return
+        }
+      }
+      // get story data from api
       try {
         commit('setIsLoading', true)
         const { data, statusText } = await storyAPI.getStory(storyId)
@@ -51,6 +61,10 @@ export default new Vuex.Store({
         ...state.story,
         ...story
       }
+      state.storyData[state.index] = story
+    },
+    setStoryFromVuex (state) {
+      state.story = state.storyData[state.index]
     },
     setIndex (state, index) {
       state.index = index

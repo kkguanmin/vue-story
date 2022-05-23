@@ -13,9 +13,9 @@
             alt="story.bg"
             class="story-bg">
         <div
-            v-if="story.text"
+            v-if="!isLoading"
             class="story-content">
-            <h2 class="story-text">{{story?story.text: ''}}</h2>
+            <h2 class="story-text">{{story ? story.text: ''}}</h2>
         </div>
         <button
             class="story-prev"
